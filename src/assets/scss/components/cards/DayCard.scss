@@ -1,0 +1,90 @@
+.day-card {
+  text-align: center;
+  background-color: red;
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 15px;
+  $parent: &;
+  &--favorite {
+    #{$parent} {
+      &__button {
+        &--favorite {
+          display: none;
+        }
+      }
+    }
+  }
+  &__search {
+  }
+
+  &__input {
+  }
+
+  &__list {
+  }
+  &__list-item {
+    cursor: pointer;
+    &:hover {
+      background-color: lightgray;
+    }
+  }
+  &__description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__name {
+  }
+
+  &__image {
+    width: 50%;
+  }
+
+  &__weather-title {
+  }
+
+  &__info {
+  }
+  &__row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__label {
+  }
+&__canvas{
+  width: 100% !important;
+}
+  &__value {
+  }
+ &__buttons{
+   margin-top: 20px;
+   margin-bottom: 20px;
+
+
+   gap: 5px;
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+   grid-gap: 10px;
+
+ }
+  &__button {
+
+    border-color:transparent;
+    cursor: pointer;
+    background-color: #4dda9b;
+    border-radius: 5px;
+    color:#ffffff;
+    &--favorite {
+    }
+
+    &--remove {
+      background-color:  red;
+    }
+    &--regular {
+
+    }
+  }
+}

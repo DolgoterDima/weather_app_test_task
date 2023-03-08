@@ -1,12 +1,21 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
+import "@/assets/scss/index.scss";
+import { VTooltip } from "v-tooltip";
+import vClickOutside from "vue-click-outside";
+import LoadingComponent from "@/components/LoadingComponent.vue";
 
-Vue.config.productionTip = false
+
+Vue.component("LoadingComponent", LoadingComponent);
+Vue.directive("click-outside", vClickOutside);
+
+Vue.directive("tooltip", VTooltip);
+Vue.config.productionTip = false;
 
 new Vue({
   router,
   store,
-  render: h => h(App)
-}).$mount('#app')
+  render: (h) => h(App),
+}).$mount("#app");

@@ -1,32 +1,50 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <div id="app" class="app">
+    <nav class="nav app__nav">
+      <router-link class="nav__link" to="/">Home</router-link>
+      <router-link class="nav__link" to="/favorites">Favorites</router-link>
     </nav>
-    <router-view/>
+    <ModalComponent
+      v-if="isShowModal"
+
+      :currentCardIdToDelete="currentCardToDeleteId"
+
+    >
+      <template #header>{{ textForModal }}</template>
+    </ModalComponent>
+
+    <router-view />
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import ModalComponent from "@/components/ModalComponent.vue";
+import { EventBus } from "@/event-bus";
 
-nav {
-  padding: 30px;
-}
+export default {
+  name: "App",
+  data() {
+    return {
+      isShowModal: false,
+      textForModal: "",
+      currentCardToDeleteId: null,
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+    };
+  },
+  components: {
+    ModalComponent,
+  },
+  created() {
+    EventBus.$on("open-popup", ({ text, id }) => {
+      this.isShowModal = true;
+      this.textForModal = text;
+      this.currentCardToDeleteId = id;
 
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+      });
+    EventBus.$on("close-popup", () => {
+      this.isShowModal = false;
+    });
+  },
+
+};
+</script>
