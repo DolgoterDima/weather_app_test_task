@@ -2,10 +2,12 @@
   "name": "weather-app-test",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://DolgoterDima.github.io/weather_app_test_task",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.3.0",
@@ -33,6 +35,7 @@
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
+    "gh-pages": "^5.0.0",
     "node-sass": "^8.0.0",
     "prettier": "2.8.4",
     "sass-loader": "^13.2.0",
