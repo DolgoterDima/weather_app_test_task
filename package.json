@@ -2,7 +2,7 @@
   "homepage": "https://dolgoterdima.github.io/weather_app_test_task/",
   "name": "weather-app-test",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
