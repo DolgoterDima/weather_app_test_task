@@ -1,4 +1,4 @@
-# weather-app-test
+# weather app test
 
 ## Project setup
 ```
