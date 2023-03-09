@@ -35,6 +35,8 @@
   }
 
   &__name {
+    font-weight: bold;
+    font-size: 20px;
   }
 
   &__image {
@@ -54,37 +56,37 @@
   }
   &__label {
   }
-&__canvas{
-  width: 100% !important;
-}
+  &__canvas {
+    width: 100% !important;
+  }
   &__value {
   }
- &__buttons{
-   margin-top: 20px;
-   margin-bottom: 20px;
+  &__days-count {
+    color: #0090ea;
+    font-weight: bold;
+  }
+  &__buttons {
+    margin-top: 20px;
+    margin-bottom: 20px;
 
-
-   gap: 5px;
-   display: grid;
-   grid-template-columns: repeat(2, 1fr);
-   grid-gap: 10px;
-
- }
+    gap: 5px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+  }
   &__button {
-
-    border-color:transparent;
+    border-color: transparent;
     cursor: pointer;
     background-color: #4dda9b;
     border-radius: 5px;
-    color:#ffffff;
+    color: #ffffff;
     &--favorite {
     }
 
     &--remove {
-      background-color:  red;
+      background-color: red;
     }
     &--regular {
-
     }
   }
 }

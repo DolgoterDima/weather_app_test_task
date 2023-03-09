@@ -7,7 +7,6 @@ import { VTooltip } from "v-tooltip";
 import vClickOutside from "vue-click-outside";
 import LoadingComponent from "@/components/LoadingComponent.vue";
 
-
 Vue.component("LoadingComponent", LoadingComponent);
 Vue.directive("click-outside", vClickOutside);
 

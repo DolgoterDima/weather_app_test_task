@@ -1,29 +1,25 @@
 .days-list {
-/*  display: flex;
+  /*  display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
    gap: 15px;*/
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 10px;
-   max-width: 1200px;
+  max-width: 1200px;
   margin: 0 auto;
 
-
-
-  @media (max-width:1200px) {
-    grid-template-columns:  1fr 1fr;
-
+  @media (max-width: 1200px) {
+    grid-template-columns: 1fr 1fr;
   }
-  @media (max-width:600px) {
-    grid-template-columns:     1fr;
-
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
   }
 
   &__item {
     background-color: #ccc;
 
-  /*   width:calc(33% - 30px) ;
+    /*   width:calc(33% - 30px) ;
 
 
     @media (max-width: 1000px) {

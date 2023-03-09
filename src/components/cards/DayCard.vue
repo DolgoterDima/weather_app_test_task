@@ -1,11 +1,11 @@
 <template>
   <article class="day-card" :class="isFavoritePage && 'day-card--favorite'">
     <div class="day-card__search" v-if="!cityWeather">
-      <span class="day-card__legend">Type city name</span>
+      <div class="day-card__legend">Type city name</div>
       <input
         class="day-card__input"
         type="text"
-        @input="getCities"
+        @input="getCitiesList"
         v-model="citySearchInput"
       />
       <div
@@ -118,20 +118,29 @@
           </button>
 
           <button
-            content="Hello"
-            v-tippy="{ placement: 'top', arrow: true }"
             class="day-card__button day-card__button--regular"
             @click="setDayPeriodToPaint(dayTime.day)"
           >
-            <font-awesome-icon icon="sun" /> Show day data for <br />
-            {{ forecastForDays }} day/s
+            <font-awesome-icon icon="sun" /> Show daytime temperature for <br />
+
+            <transition name="fade">
+              <span class="day-card__days-count" :key="forecastForDays">
+                {{ forecastForDays }}</span
+              >
+            </transition>
+            day/s
           </button>
           <button
             @click="setDayPeriodToPaint(dayTime.night)"
             class="day-card__button day-card__button--regular"
           >
-            <font-awesome-icon icon="moon" /> Show night data for <br />
-            {{ forecastForDays }} day/s
+            <font-awesome-icon icon="moon" /> Show night temperature for <br />
+            <transition name="fade">
+              <span class="day-card__days-count" :key="forecastForDays">
+                {{ forecastForDays }}</span
+              >
+            </transition>
+            day/s
           </button>
         </div>
 
@@ -358,8 +367,6 @@ export default {
 
       //paint data
       new Chart(canvas, config);
-
-      return null;
     },
 
     setCurrentCity(city = "") {
@@ -407,7 +414,7 @@ export default {
         });
     },
 
-    getCities() {
+    getCitiesList() {
       if (this.citySearchInput.length <= MAX_LETTERS_COUNT_TO_START_SEARCH_CITY)
         return;
       this.isCitySearchStart = true;
@@ -416,7 +423,7 @@ export default {
         method: "GET",
         redirect: "follow",
         headers: {
-          apikey: process.env.GET_CITY_API_KEY,
+          apikey: "WtR5Ms8niYSZ6HPzcZuGwQi1vYPvs4PY",
         },
       };
 
@@ -426,16 +433,18 @@ export default {
       )
         .then((response) => response.json())
         .then((result) => {
-          /* if city was found return array else returned object */
+          /* if city was found  result returns array else returns an object */
           if (Array.isArray(result)) {
             this.isCitySearchStart = false;
             this.citiesList = result.slice(0, MAX_COUNT_OF_CITIES_TO_SHOW);
+            this.loadingMessage = "";
           } else {
             this.citiesList = [];
             this.isCitySearchStart = false;
             this.loadingMessage = result.message;
           }
-        });
+        })
+        .catch((error) => console.error(error));
     },
 
     setFavoriteStatus() {

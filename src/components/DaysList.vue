@@ -47,7 +47,7 @@ export default {
           fetch(url)
             .then((response) => response.json())
             .then((data) => {
-               this.daysList.push({ id: Date.now(), city: data.address.city });
+              this.daysList.push({ id: Date.now(), city: data.address.city });
             })
             .catch((error) => console.log(error));
         };
@@ -58,8 +58,7 @@ export default {
     },
     removeDay(e) {
       this.daysList = this.daysList.filter((item) => item.id !== e);
-
-     },
+    },
     addNewDay() {
       this.daysList.push({ id: Date.now(), city: "" });
     },

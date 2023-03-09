@@ -12,7 +12,7 @@
         @addToFavorite="addDayToFavorite"
       />
       <button class="days-list__add" @click="addNewDay" v-if="isShowAddNewDay">
-        <font-awesome-icon icon="plus"  size="xl"  />
+        <font-awesome-icon icon="plus" size="xl" />
       </button>
     </div>
   </div>
@@ -20,8 +20,7 @@
 
 <script>
 import DayCard from "@/components/cards/DayCard.vue";
-import { mapActions } from "vuex";
-import { EventBus } from "@/event-bus";
+ import { EventBus } from "@/event-bus";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 library.add(faPlus);
@@ -43,7 +42,7 @@ export default {
   },
   components: {
     DayCard,
-    FontAwesomeIcon
+    FontAwesomeIcon,
   },
   computed: {
     isShowAddNewDay() {
@@ -51,41 +50,87 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["setDayCardInfo"]),
-    getCurrentUserCity() {
-      if (navigator.geolocation) {
-        this.loadingMessage = "Detecting your current city";
-        const showPosition = (position) => {
-          const lat = position.coords.latitude;
-          const lon = position.coords.longitude;
-          const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=en`;
-
-          fetch(url)
-            .then((response) => response.json())
-            .then((data) => {
-              this.loadingMessage = "";
-
-              this.daysList.push({ id: Date.now(), city: data.address.city });
-            })
-            .catch((error) => {
-              this.loadingMessage = `${error}. Please enter city name manually`;
-              setTimeout(() => {
-                this.loadingMessage = "";
-              }, 5000);
-              console.log(`API error ${error}`);
-              this.daysList.push({ id: Date.now(), city: "" });
-            });
-        };
-        navigator.geolocation.getCurrentPosition(showPosition);
-      } else {
-        console.log("Geolocation is not supported by this browser.");
+    async getCurrentUserCity() {
+      if (!navigator.geolocation) {
+        this.loadingMessage = "Geolocation is not supported by this browser";
+        return;
       }
 
-      /* if ( !this.daysList.length){
-        this.daysList.push({ id: Date.now(), city: '' });
+      try {
+        this.loadingMessage = "Detecting your current city";
 
-      }*/
+        const position = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+
+        const { latitude: lat, longitude: lon } = position.coords;
+        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=en`;
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        this.loadingMessage = "";
+        this.daysList.push({ id: Date.now(), city: data.address.city });
+      } catch (error) {
+        if (error.code == error.PERMISSION_DENIED) {
+          this.loadingMessage = "You disallow access to geolocation";
+          setTimeout(() => {
+            this.loadingMessage = "";
+            this.addNewDay();
+          }, 3000);
+        } else {
+          this.loadingMessage = `${error}. Please enter city name manually`;
+          setTimeout(() => {
+            this.loadingMessage = "";
+          }, 5000);
+          console.log(`API error ${error}`);
+          this.addNewDay();
+        }
+      }
     },
+    /* getCurrentUserCity() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition( (position)=> {
+          this.loadingMessage = "Detecting your current city";
+
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=en`;
+
+            fetch(url)
+                .then((response) => response.json())
+                .then((data) => {
+                  this.loadingMessage = "";
+
+                  this.daysList.push({ id: Date.now(), city: data.address.city });
+                })
+                .catch((error) => {
+                  this.loadingMessage = `${error}. Please enter city name manually`;
+                  setTimeout(() => {
+                    this.loadingMessage = "";
+                  }, 5000);
+                  console.log(`API error ${error}`);
+                  this.addNewDay()
+                });
+
+         },  (error)=> {
+          if (error.code == error.PERMISSION_DENIED) {
+            this.loadingMessage = "You disallow access to geolocation";
+            setTimeout(()=>{
+              this.loadingMessage = "";
+              this.addNewDay()
+            }, 3000)
+          }
+        });
+      } else {
+        this.loadingMessage = "Geolocation is not supported by this browser ";
+
+
+
+      }
+
+
+    },*/
     removeDay(e) {
       EventBus.$emit("open-popup", {
         text: `Do you really want to remove city? `,

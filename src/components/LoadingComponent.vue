@@ -2,10 +2,10 @@
   <div class="loading">
     {{ message }}
     <svg
- v-if="isShowLoader"
+      v-if="isShowLoader"
       style="
         margin: auto;
-        background: rgb(241, 242, 243);
+        background: transparent;
         display: block;
         shape-rendering: auto;
       "
@@ -45,10 +45,10 @@ export default {
       type: String,
       default: "Loading",
     },
-    isShowLoader:{
-      type:Boolean,
-      default:true
-}
+    isShowLoader: {
+      type: Boolean,
+      default: true,
+    },
   },
 };
 </script>

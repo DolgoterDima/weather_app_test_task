@@ -6,9 +6,7 @@
     </nav>
     <ModalComponent
       v-if="isShowModal"
-
       :currentCardIdToDelete="currentCardToDeleteId"
-
     >
       <template #header>{{ textForModal }}</template>
     </ModalComponent>
@@ -28,7 +26,6 @@ export default {
       isShowModal: false,
       textForModal: "",
       currentCardToDeleteId: null,
-
     };
   },
   components: {
@@ -39,12 +36,10 @@ export default {
       this.isShowModal = true;
       this.textForModal = text;
       this.currentCardToDeleteId = id;
-
-      });
+    });
     EventBus.$on("close-popup", () => {
       this.isShowModal = false;
     });
   },
-
 };
 </script>
