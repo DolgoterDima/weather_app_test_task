@@ -3,12 +3,11 @@ const webpack = require("webpack");
 
 module.exports = defineConfig({
   transpileDependencies: true,
-  publicPath: process.env.NODE_ENV === "production" ? "/weather-app/" : "/",
+  publicPath:
+    process.env.NODE_ENV === "production" ? "/weather_app_test_task/" : "/",
 
   lintOnSave: false,
   configureWebpack: {
-    publicPath: process.env.NODE_ENV === "production" ? "/weather-app/" : "/",
-
     plugins: [
       new webpack.DefinePlugin({
         // allow access to process.env from within the vue app
